@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<div id="app" :style="{'padding-top':navbarHeight+'px'}">
+
+    <Navbar ref="navbarComponent" @navbarHeight="receiveNavHeight" v-if="true"></Navbar>
+    <IdeasListingPage :navbar-height="navbarHeight" v-if="loadIdeasListingPage"></IdeasListingPage>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//components
+import Navbar from './components/Navbar.vue'
+
+//pages
+import IdeasListingPage from './pages/IdeasListingPage.vue'
+import LoginPage from './pages/LoginPage.vue'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+    name: 'App',
+    components: {
+        Navbar,
+        IdeasListingPage
+    },
+    data: function () {
+        return {
+            navbarHeight: 0,
+            loadIdeasListingPage: false,
+            currentRoute: window.location.pathname
+        }
+    },
+    methods: {
+        receiveNavHeight: function (val) {
+            this.navbarHeight = val
+            this.loadIdeasListingPage = true
+        }
+    }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

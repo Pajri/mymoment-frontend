@@ -1,0 +1,55 @@
+body,html {
+    margin: 0;
+    padding: 0;
+}
+* {
+    box-sizing: border-box;
+}
+
+.rounded-0-dropdown ul{
+    border-radius:0px;
+}
+
+.nav-brand{
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.nav-searchbar-container{
+    flex-grow: 2;
+    justify-content: center;
+    flex-basis: 0
+}
+
+.nav-searchbar-container form {
+    width:100%;
+}
+
+.nav-searchbar-container .input-group {
+    width:100%;
+}
+
+.nav-right-menu{
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.toggle-sidebar{
+    position: fixed;
+    left: 0;
+    top: 87px;
+}
+
+.shr-sidebar div{
+    bottom:0;
+    top:unset;
+}
+
+.ideas-listing-image img{
+    width:120px;
+}
+
+.ideas-listing-container {
+    padding-left: 172px;
+    padding-right: 172px;
+}
