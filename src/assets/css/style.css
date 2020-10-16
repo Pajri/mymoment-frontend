@@ -53,3 +53,35 @@ body,html {
     padding-left: 172px;
     padding-right: 172px;
 }
+
+.login-container{
+    width: 30%;
+    background-color: #cacaca;
+    padding: 6rem 3rem;
+    border-radius: 8px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.post-editor-container{
+    padding: 27px 10px;
+    margin-top: 6px;
+    display: block;
+    height: auto;
+}
+
+.post-editor-container .post-meta-container {
+    margin-top: 13px;
+}
+
+.post-editor-container span{
+    color: white;
+    margin: 0px 18px;
+}
+
+.post-editor-container .btn-post {
+    margin-top: 13px;
+}
