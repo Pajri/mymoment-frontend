@@ -68,6 +68,7 @@ export default {
     methods: {
         onRegisterSubmit(evt) {
             evt.preventDefault();
+            this.cleanFormInput();
 
             let registrationValidation = this.validateRegistrationForm();
             if (!registrationValidation.isValid) {
@@ -139,6 +140,12 @@ export default {
         showRegistrationAlert(val) {
             this.showRegAlert = true;
             this.registerAlertMessage = val;
+        },
+        cleanFormInput() {
+            this.registrationForm.fullName = this.registrationForm.fullName.trim();
+            this.registrationForm.email = this.registrationForm.email.trim();
+            this.registrationForm.password = this.registrationForm.password.trim();
+            this.registrationForm.passwordConfirmation = this.registrationForm.passwordConfirmation.trim();
         }
     }
 };

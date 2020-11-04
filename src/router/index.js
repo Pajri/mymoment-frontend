@@ -8,6 +8,8 @@ import PostEditorPage from './../pages/InnerPages/PostEditorPage.vue'
 
 import LoginPage from '../pages/LoginPage.vue'
 import RegisterPage from '../pages/RegisterPage.vue'
+import EmailConfirmationPage from '../pages/EmailConfirmationPage.vue'
+
 import ResetPasswordPage from '../pages/ResetPasswordPage.vue'
 
 Vue.use(Router)
@@ -30,6 +32,7 @@ export default new Router({
     },
     { path: '/login', component: LoginPage },
     { path: '/register', component: RegisterPage },
+    { path: '/email_confirmation', component: EmailConfirmationPage },
     { path: '/reset-password', component: ResetPasswordPage }
   ]
 })
