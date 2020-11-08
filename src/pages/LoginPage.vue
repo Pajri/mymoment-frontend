@@ -2,8 +2,12 @@
 <div>
     <b-container>
         <div class="login-container">
-            <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
-                Dismissible Alert!
+            <b-alert v-model="showAlert" variant="danger" dismissible>
+                <ul>
+                    <li v-for="m in this.errorMessage" :key="m">
+                        {{m}}
+                    </li>
+                </ul>
             </b-alert>
             <b-form @submit="onSubmit">
                 <b-form-group id="input-group-email">
@@ -15,9 +19,6 @@
                 </b-form-group>
 
                 <b-button type="submit" variant="primary">Login</b-button>
-
-                <!--read more about google login at https://www.npmjs.com/package/vue-google-login -->
-                <GoogleLogin :params="googleLoginParams" :renderParams="goggleLoginRenderParams"></GoogleLogin>
             </b-form>
         </div>
     </b-container>
@@ -25,14 +26,15 @@
 </template>
 
 <script>
+import axios from "axios";
+import {
+    validatePassword
+} from "@/module/validation";
+
 import {
     BAlert,
     BContainer
 } from "bootstrap-vue";
-
-import {
-    GoogleLogin
-} from "vue-google-login";
 
 export default {
     name: "LoginPage",
@@ -42,27 +44,75 @@ export default {
                 email: "",
                 password: "",
             },
-            googleLoginParams: {
-                client_id: "xxxxxx",
-            },
-            // only needed if you want to render the button with the google ui
-            goggleLoginRenderParams: {
-                width: 250,
-                height: 50,
-                longtitle: true,
-            },
-            showDismissibleAlert: true,
+            showAlert: false,
+            errorMessage: [],
         };
     },
     components: {
         BAlert,
         BContainer,
-        GoogleLogin,
     },
     methods: {
         onSubmit(evt) {
             evt.preventDefault();
-            alert(JSON.stringify(this.form));
+            this.cleanInput();
+
+            let loginValidation = this.validateForm();
+            if (!loginValidation.isValid) {
+                this.showErrorAlert(loginValidation.message);
+                return;
+            }
+
+            const loginURL = process.env.VUE_APP_API_HOST + "/api/auth/login";
+
+            const data = new URLSearchParams();
+            data.append("email", this.form.email);
+            data.append("password", this.form.password);
+
+            const config = {
+                withCredentials: true
+            };
+
+            axios
+                .post(loginURL, data, config)
+                .then((response) => {
+                    if (response.status === 200) {
+                        let data = response.data;
+                        let accessToken = data.access_token;
+                        localStorage.JWT = accessToken;
+
+                        this.showAlert = false;
+                        this.errorMessage = [];
+
+                        this.$router.push('/');
+                    }
+                })
+                .catch((error) => {
+                    this.showErrorAlert(error.response.data.message);
+                });
+        },
+        cleanInput() {
+            this.form.email = this.form.email.trim();
+            this.form.password = this.form.password.trim();
+        },
+        validateForm() {
+            let isValid = true;
+            let message = [];
+
+            const vPassword = validatePassword(this.form.password)
+            if (!vPassword.isValid) {
+                isValid = false;
+                message = message.concat(vPassword.message)
+            }
+
+            return {
+                isValid: isValid,
+                message: message,
+            };
+        },
+        showErrorAlert(message) {
+            this.showAlert = true;
+            this.errorMessage = message;
         },
     },
 };

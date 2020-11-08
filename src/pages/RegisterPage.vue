@@ -5,7 +5,7 @@
             <b-alert v-model="showRegAlert" variant="danger" dismissible>
                 <ul>
                     <li v-for="m in this.registerAlertMessage" :key="m">
-                        {{m}}
+                        {{ m }}
                     </li>
                 </ul>
             </b-alert>
@@ -31,7 +31,7 @@
 
         <div class="login-container" v-if="showRegSuccesfull">
             Registration successful ! <br />
-            Please check your email to verify your email. <br>
+            Please check your email to verify your email. <br />
             <a href="/login">Go to login page</a>
         </div>
     </b-container>
@@ -40,6 +40,11 @@
 
 <script>
 import axios from "axios";
+import {
+    validatePassword,
+    validatePasswordConfirmation,
+    validateFullName,
+} from "@/module/validation";
 import {
     BAlert,
     BContainer
@@ -58,7 +63,7 @@ export default {
             registerAlertMessage: [],
             showRegAlert: false,
             showRegister: true,
-            showRegSuccesfull: false
+            showRegSuccesfull: false,
         };
     },
     components: {
@@ -77,18 +82,21 @@ export default {
             }
 
             /*start prepare request*/
-            var registerUrl = process.env.VUE_APP_API_HOST + "/api/auth/signup";
-            var config = {
+            let registerUrl = process.env.VUE_APP_API_HOST + "/api/auth/signup";
+            let config = {
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
             };
 
-            var data = new URLSearchParams();
-            data.append('full_name', this.registrationForm.fullName);
-            data.append('email', this.registrationForm.email);
-            data.append('password', this.registrationForm.password);
-            data.append('confirm_password', this.registrationForm.passwordConfirmation);
+            let data = new URLSearchParams();
+            data.append("full_name", this.registrationForm.fullName);
+            data.append("email", this.registrationForm.email);
+            data.append("password", this.registrationForm.password);
+            data.append(
+                "confirm_password",
+                this.registrationForm.passwordConfirmation
+            );
             /*end prepare request*/
 
             /*start request execution*/
@@ -100,15 +108,13 @@ export default {
                         self.showRegister = false;
                         self.showRegSuccesfull = true;
                     } else {
-                        console.error("undefined status code : " + response.status)
+                        console.error("undefined status code : " + response.status);
                     }
-
                 })
                 .catch(function (error) {
-                    self.showRegistrationAlert(error.response.data.message)
+                    self.showRegistrationAlert(error.response.data.message);
                 });
             /*end request execution*/
-
         },
         onOtpSubmit(evt) {
             evt.preventDefault();
@@ -116,20 +122,28 @@ export default {
         },
         validateRegistrationForm() {
             let isValid = true;
-            let message = []
-            //validate password confirmation
-            if (
-                this.registrationForm.password !=
-                this.registrationForm.passwordConfirmation
-            ) {
+            let message = [];
+
+            const regForm = this.registrationForm;
+            const vFullName = validateFullName(regForm.fullName);
+            if (!vFullName.isValid) {
                 isValid = false;
-                message.push("Password confirmation does not match.");
+                message = message.concat(vFullName.message);
             }
 
-            //validate password length
-            if (this.registrationForm.password.length < 10) {
+            const vPassConfirm = validatePasswordConfirmation(
+                regForm.password,
+                regForm.passwordConfirmation
+            );
+            if (!vPassConfirm.isValid) {
                 isValid = false;
-                message.push("Password length minimum 10 characters.")
+                message = message.concat(vPassConfirm.message);
+            }
+
+            const vPassword = validatePassword(regForm.password);
+            if (!vPassword.isValid) {
+                isValid = false;
+                message = message.concat(vPassword.message);
             }
 
             return {
@@ -146,7 +160,7 @@ export default {
             this.registrationForm.email = this.registrationForm.email.trim();
             this.registrationForm.password = this.registrationForm.password.trim();
             this.registrationForm.passwordConfirmation = this.registrationForm.passwordConfirmation.trim();
-        }
-    }
+        },
+    },
 };
 </script>
