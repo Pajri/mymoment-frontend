@@ -14,25 +14,31 @@ import ResetPasswordPage from '../pages/ResetPasswordPage.vue'
 
 Vue.use(Router)
 
-export default new Router({
+
+const router = new Router({
   mode: 'history',
   routes: [
-    { path: '/', 
+    {
+      path: '/',
       component: InnerPageContainer,
       children: [
         {
-          path:'',
+          path: '',
           component: IdeasListingPage
         },
         {
-          path:'post/add',
+          path: 'post/add',
           component: PostEditorPage
         }
-      ] 
+      ],
+      meta: {
+        requiresAuth: true,
+      }
     },
     { path: '/login', component: LoginPage },
-    { path: '/register', component: RegisterPage },
+    { path: '/register', component: RegisterPage, meta: { requiresAuth: true } },
     { path: '/email_confirmation', component: EmailConfirmationPage },
     { path: '/reset-password', component: ResetPasswordPage }
-  ]
+  ],
 })
+export default router;

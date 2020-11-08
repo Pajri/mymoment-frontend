@@ -18,6 +18,10 @@
                     <b-form-input type="password" id="txt_password" v-model="form.password" required placeholder="Enter password"></b-form-input>
                 </b-form-group>
 
+                <p v-if="showPleaseWait">
+                    Please wait ...
+                </p>
+
                 <b-button type="submit" variant="primary">Login</b-button>
             </b-form>
         </div>
@@ -46,6 +50,7 @@ export default {
             },
             showAlert: false,
             errorMessage: [],
+            showPleaseWait: false,
         };
     },
     components: {
@@ -55,6 +60,7 @@ export default {
     methods: {
         onSubmit(evt) {
             evt.preventDefault();
+            this.showPleaseWait = true;
             this.cleanInput();
 
             let loginValidation = this.validateForm();
@@ -83,12 +89,15 @@ export default {
 
                         this.showAlert = false;
                         this.errorMessage = [];
+                        this.showPleaseWait = false;
 
                         this.$router.push('/');
+
                     }
                 })
                 .catch((error) => {
                     this.showErrorAlert(error.response.data.message);
+                    this.showPleaseWait = false;
                 });
         },
         cleanInput() {
