@@ -66,9 +66,14 @@ body,html {
     transform: translate(-50%, -50%);
 }
 
+.post-form-alert{
+    margin-top: 9px;
+    margin-bottom: -5px!important;
+}
+
 .post-editor-container{
     padding: 27px 10px;
-    margin-top: 6px;
+    margin-top: 12px;
     display: block;
     height: auto;
 }
