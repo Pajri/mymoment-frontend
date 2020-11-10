@@ -32,6 +32,10 @@
 <script>
 import axios from "axios";
 import {
+    saveAccessToken
+} from "@/module/auth_util"
+
+import {
     validatePassword
 } from "@/module/validation";
 
@@ -85,7 +89,7 @@ export default {
                     if (response.status === 200) {
                         let data = response.data;
                         let accessToken = data.access_token;
-                        localStorage.JWT = accessToken;
+                        saveAccessToken(accessToken);
 
                         this.showAlert = false;
                         this.errorMessage = [];
@@ -97,8 +101,8 @@ export default {
                 })
                 .catch((error) => {
                     this.showErrorAlert(error.response.data.message);
-                    this.showPleaseWait = false;
-                });
+                })
+                .finally(() => this.showPleaseWait = false);
         },
         cleanInput() {
             this.form.email = this.form.email.trim();

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {getAccessToken} from '@/module/auth_util'
 
 /*pages*/
 import InnerPageContainer from './../pages/InnerPages/InnerPageContainer.vue'
@@ -36,9 +37,22 @@ const router = new Router({
       }
     },
     { path: '/login', component: LoginPage },
-    { path: '/register', component: RegisterPage, meta: { requiresAuth: true } },
+    { path: '/register', component: RegisterPage },
     { path: '/email_confirmation', component: EmailConfirmationPage },
     { path: '/reset-password', component: ResetPasswordPage }
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (getAccessToken() == null) {
+      next('/login');
+    }else{
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
 export default router;

@@ -15,19 +15,6 @@ import './assets/css/style.css'
 
 setupAxios();
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (localStorage.getItem('JWT') == null) {
-      next('/login');
-    }else{
-      next();
-    }
-  } else {
-    next();
-  }
-});
-
-
 new Vue({
   router,
   render: h => h(App),
