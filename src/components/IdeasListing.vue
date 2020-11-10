@@ -1,50 +1,11 @@
 <template>
 <div>
-    <div class="mt-4">
-        <span>12 April 2020 12:22 AM</span>
-        <b-card img-src="https://placekitten.com/300/300" img-alt="Card image" img-left class="mb-3 ideas-listing-image">
+    <!-- TODO add loading component -->
+    <div class="mt-4" v-for="post in this.postList" :key="post.post_id">
+        <span>{{post.date}}</span>
+        <b-card :img-src="post.image_url" img-alt="Card image" img-left class="mb-3 ideas-listing-image">
             <b-card-text>
-                Some quick example text to build on the card and make up the bulk of the card's content.
-            </b-card-text>
-        </b-card>
-    </div>
-    <div class="mt-4">
-        <span>12 April 2020 12:22 AM</span>
-        <b-card img-src="https://placekitten.com/300/300" img-alt="Card image" img-left class="mb-3 ideas-listing-image">
-            <b-card-text>
-                Some quick example text to build on the card and make up the bulk of the card's content.
-            </b-card-text>
-        </b-card>
-    </div>
-    <div class="mt-4">
-        <span>12 April 2020 12:22 AM</span>
-        <b-card class="mb-3 ideas-listing-image">
-            <b-card-text>
-                Some quick example text to build on the card and make up the bulk of the card's content.
-            </b-card-text>
-        </b-card>
-    </div>
-    <div class="mt-4">
-        <span>12 April 2020 12:22 AM</span>
-        <b-card img-src="https://placekitten.com/300/300" img-alt="Card image" img-left class="mb-3 ideas-listing-image">
-            <b-card-text>
-                Some quick example text to build on the card and make up the bulk of the card's content.
-            </b-card-text>
-        </b-card>
-    </div>
-    <div class="mt-4">
-        <span>12 April 2020 12:22 AM</span>
-        <b-card class="mb-3 ideas-listing-image">
-            <b-card-text>
-                Some quick example text to build on the card and make up the bulk of the card's content.
-            </b-card-text>
-        </b-card>
-    </div>
-    <div class="mt-4">
-        <span>12 April 2020 12:22 AM</span>
-        <b-card class="mb-3 ideas-listing-image">
-            <b-card-text>
-                Some quick example text to build on the card and make up the bulk of the card's content.
+                {{post.content}}
             </b-card-text>
         </b-card>
     </div>
@@ -52,7 +13,36 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-    name: "IdeasListing"
+    name: "IdeasListing",
+    data() {
+        return {
+            postList: [],
+        }
+    },
+    created() {
+        this.loadPostList()
+    },
+    methods: {
+        loadPostList() {
+            const postListUrl = process.env.VUE_APP_API_HOST + "/api/post";
+            const config = {
+                withCredentials: true,
+                headers: {
+                    'Authorization': localStorage.JWT
+                }
+            };
+
+            axios.get(postListUrl, config)
+                .then((response) => {
+                    console.log(response.data)
+                    this.postList = response.data.post_list;
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+    },
 }
 </script>

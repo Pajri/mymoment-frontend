@@ -89,6 +89,7 @@ export default {
             this.postText = "";
             this.fileName = "";
             this.$refs.frmImage.value = "";
+            this.charCount = this.maxChar;
         },
         onUploadClick(evt) {
             evt.preventDefault();
