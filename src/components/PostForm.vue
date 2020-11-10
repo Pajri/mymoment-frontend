@@ -133,6 +133,7 @@ export default {
                     if (response.status == 201) {
                         this.imageUrl = response.data.image_url;
                         this.clearForm();
+                        this.$emit('onPosted')
                     }
                 })
                 .catch((error) => {

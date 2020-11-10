@@ -13,36 +13,8 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
     name: "IdeasListing",
-    data() {
-        return {
-            postList: [],
-        }
-    },
-    created() {
-        this.loadPostList()
-    },
-    methods: {
-        loadPostList() {
-            const postListUrl = process.env.VUE_APP_API_HOST + "/api/post";
-            const config = {
-                withCredentials: true,
-                headers: {
-                    'Authorization': localStorage.JWT
-                }
-            };
-
-            axios.get(postListUrl, config)
-                .then((response) => {
-                    console.log(response.data)
-                    this.postList = response.data.post_list;
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }
-    },
+    props: ['postList']
 }
 </script>
