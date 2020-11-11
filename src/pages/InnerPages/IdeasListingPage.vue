@@ -5,7 +5,7 @@
             <b-col md="12">
                 <Sidebar :navbar-height="navbarHeight" v-if="false" />
                 <PostForm @onPosted="insertPost" />
-                <IdeasListing :postList="postList" :errorMessage="listingErrorMessage" :showAlert="isListingAlertShow" />
+                <IdeasListing :postList="postList" :errorMessage="listingErrorMessage" :showAlert="isListingAlertShow" :showSpinner="isListingSpinnerShow" />
             </b-col>
         </b-row>
     </b-container>
@@ -39,6 +39,7 @@ export default {
             postList: [],
             listingErrorMessage: "",
             isListingAlertShow: false,
+            isListingSpinnerShow: false,
         }
     },
     created() {
@@ -46,6 +47,7 @@ export default {
     },
     methods: {
         loadPostList() {
+            this.isListingSpinnerShow = true;
             const postListUrl = process.env.VUE_APP_API_HOST + "/api/post";
             const config = {
                 withCredentials: true,
@@ -62,6 +64,7 @@ export default {
                 .catch((error) => {
                     this.showListingErrorAlert(error.response.data.message)
                 })
+                .finally(() => this.isListingSpinnerShow = false)
         },
         insertPost(post) {
             this.postList.unshift(post);
