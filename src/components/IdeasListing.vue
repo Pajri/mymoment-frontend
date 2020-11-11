@@ -1,6 +1,6 @@
 <template>
 <div>
-    <!-- TODO add loading component -->
+    <b-alert v-model="showAlert" dismissible variant="danger" class="mt-2">{{errorMessage}}</b-alert>
     <div class="mt-4" v-for="post in this.postList" :key="post.post_id">
         <span>{{post.date}}</span>
         <b-card :img-src="post.image_url" img-alt="Card image" img-left class="mb-3 ideas-listing-image">
@@ -15,6 +15,6 @@
 <script>
 export default {
     name: "IdeasListing",
-    props: ['postList']
+    props: ['postList', 'showAlert', 'errorMessage'],
 }
 </script>

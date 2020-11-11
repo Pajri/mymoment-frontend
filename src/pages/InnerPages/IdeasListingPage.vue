@@ -4,8 +4,8 @@
         <b-row>
             <b-col md="12">
                 <Sidebar :navbar-height="navbarHeight" v-if="false" />
-                <PostForm @onPosted="loadPostList" />
-                <IdeasListing :postList="postList" />
+                <PostForm @onPosted="insertPost" />
+                <IdeasListing :postList="postList" :errorMessage="listingErrorMessage" :showAlert="isListingAlertShow" />
             </b-col>
         </b-row>
     </b-container>
@@ -37,6 +37,8 @@ export default {
     data() {
         return {
             postList: [],
+            listingErrorMessage: "",
+            isListingAlertShow: false,
         }
     },
     created() {
@@ -54,13 +56,25 @@ export default {
 
             axios.get(postListUrl, config)
                 .then((response) => {
-                    console.log(response.data)
                     this.postList = response.data.post_list;
+                    this.hideListingErrorAlert();
                 })
                 .catch((error) => {
-                    console.log(error)
+                    this.showListingErrorAlert(error.response.data.message)
                 })
+        },
+        insertPost(post) {
+            this.postList.unshift(post);
+        },
+        hideListingErrorAlert() {
+            this.listingErrorMessage = "";
+            this.isListingAlertShow = false;
+        },
+        showListingErrorAlert(message) {
+            this.listingErrorMessage = message;
+            this.isListingAlertShow = true;
         }
     },
+
 };
 </script>
