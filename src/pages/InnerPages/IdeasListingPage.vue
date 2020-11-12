@@ -5,7 +5,7 @@
             <b-col md="12">
                 <Sidebar :navbar-height="navbarHeight" v-if="false" />
                 <PostForm @onPosted="insertPost" />
-                <IdeasListing :postList="postList" :errorMessage="listingErrorMessage" :showAlert="isListingAlertShow" :showSpinner="isListingSpinnerShow" />
+                <IdeasListing :postList="postList" :errorMessage="listingErrorMessage" :showAlert="isListingAlertShow" :showSpinner="isListingSpinnerShow" @onDeleteSuccess="onDeleteSuccess" @onDeleteError="onDeleteError" />
             </b-col>
         </b-row>
     </b-container>
@@ -76,12 +76,10 @@ export default {
                 .then((response) => {
                     if (response.data.post_list != null && response.data.post_list.length > 0) {
                         this.postList = this.postList.concat(response.data.post_list);
-                        console.log("length : " + this.postList.length)
                     }
                 })
                 .catch((error) => {
-                    console.log(error)
-                    this.showListingErrorAlert(error.response.data.message)
+                    this.showListingErrorAlert([error.response.data.message])
                 })
                 .finally(() => this.isListingSpinnerShow = false)
         },
@@ -106,6 +104,13 @@ export default {
                 const lastPostDate = this.postList[this.postList.length - 1].hidden_date;
                 this.loadPostList(5, lastPostDate)
             }
+        },
+        onDeleteSuccess() {
+            this.postList = [];
+            this.loadPostList(10, null);
+        },
+        onDeleteError(error) {
+            this.showListingErrorAlert(error.response.data.message)
         }
     },
 
