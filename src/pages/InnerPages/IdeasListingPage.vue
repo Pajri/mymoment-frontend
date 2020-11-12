@@ -14,6 +14,9 @@
 
 <script>
 import axios from "axios";
+import {
+    getAccessToken
+} from "@/module/auth_util"
 import Sidebar from "../../components/Sidebar.vue";
 import IdeasListing from "../../components/IdeasListing.vue";
 import PostForm from "../../components/PostForm.vue";
@@ -42,26 +45,42 @@ export default {
             isListingSpinnerShow: false,
         }
     },
+    mounted() {
+        window.onscroll = this.handleScroll
+    },
     created() {
-        this.loadPostList()
+        this.loadPostList(10, null)
     },
     methods: {
-        loadPostList() {
+        loadPostList(limit, date) {
             this.isListingSpinnerShow = true;
-            const postListUrl = process.env.VUE_APP_API_HOST + "/api/post";
+            this.hideListingErrorAlert();
+
+            let getListUrl = process.env.VUE_APP_API_HOST + "/api/post";
+
+            let param = []
+            param.push("limit=" + limit)
+            if (date != null) {
+                param.push("date=" + encodeURIComponent(date))
+            }
+            getListUrl = getListUrl + "?" + param.join("&");
+
             const config = {
                 withCredentials: true,
                 headers: {
-                    'Authorization': localStorage.JWT
+                    'Authorization': getAccessToken()
                 }
             };
 
-            axios.get(postListUrl, config)
+            axios.get(getListUrl + "", config)
                 .then((response) => {
-                    this.postList = response.data.post_list;
-                    this.hideListingErrorAlert();
+                    if (response.data.post_list != null && response.data.post_list.length > 0) {
+                        this.postList = this.postList.concat(response.data.post_list);
+                        console.log("length : " + this.postList.length)
+                    }
                 })
                 .catch((error) => {
+                    console.log(error)
                     this.showListingErrorAlert(error.response.data.message)
                 })
                 .finally(() => this.isListingSpinnerShow = false)
@@ -76,6 +95,17 @@ export default {
         showListingErrorAlert(message) {
             this.listingErrorMessage = message;
             this.isListingAlertShow = true;
+        },
+        handleScroll() {
+            const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+            const scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight
+
+            const scrolledToBottom = scrollTop >= ((scrollHeight - clientHeight) - 100);
+            if (scrolledToBottom && !this.isListingSpinnerShow) {
+                const lastPostDate = this.postList[this.postList.length - 1].hidden_date;
+                this.loadPostList(5, lastPostDate)
+            }
         }
     },
 
