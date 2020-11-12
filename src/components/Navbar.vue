@@ -17,10 +17,13 @@
     <b-collapse id="nav-collapse" is-nav class="nav-right-menu">
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-            <b-nav-item-dropdown right class="rounded-0-dropdown">
+            <b-nav-text class="text-white">Hi, {{fullName}}
+
+            </b-nav-text>
+            <b-nav-item-dropdown right class="rounded-0-dropdown" no-caret>
                 <!-- Using 'button-content' slot -->
                 <template v-slot:button-content>
-                    User
+                    <font-awesome-icon icon="bars" />
                 </template>
                 <b-dropdown-item href="#">Profile</b-dropdown-item>
                 <b-dropdown-item href="#">Sign Out</b-dropdown-item>
@@ -35,9 +38,21 @@ import {
     BIcon
 } from 'bootstrap-vue'
 
+import {
+    getFullName
+} from "@/module/auth_util"
+
 export default {
     components: {
         BIcon
+    },
+    data() {
+        return {
+            fullName: "",
+        }
+    },
+    created() {
+        this.fullName = getFullName();
     },
     mounted() {
         this.$emit('navbarHeight', this.$refs.navbar.$el.clientHeight)

@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import {getAccessToken} from '@/module/auth_util'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /*pages*/
 import InnerPageContainer from './../pages/InnerPages/InnerPageContainer.vue'
@@ -14,6 +17,10 @@ import EmailConfirmationPage from '../pages/EmailConfirmationPage.vue'
 import ResetPasswordPage from '../pages/ResetPasswordPage.vue'
 
 Vue.use(Router)
+
+//setup font awesome
+library.add(faBars) 
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
 const router = new Router({

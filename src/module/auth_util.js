@@ -1,3 +1,5 @@
+import Vue from "vue"
+
 export function saveAccessToken(token) {
     localStorage.JWT = token;
 }
@@ -14,4 +16,13 @@ export function removeAccessToken() {
 
 export function getAccessToken() {
     return localStorage.JWT
+}
+
+export function getFullName(){
+    const payload = Vue.$jwt.decode(getAccessToken(), null)
+    if (payload.full_name){
+        return payload.full_name;
+    }else{
+        return "";
+    }
 }
