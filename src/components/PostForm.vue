@@ -11,11 +11,15 @@
         <b-form @submit="onSubmit">
             <b-form-textarea id="textarea-rows" placeholder="How was your day ?" rows="5" @keyup="countCharacter" v-model="postText" :state="postText.length <= this.maxChar" required></b-form-textarea>
             <div class="d-flex flex-row justify-content-end post-meta-container">
-                <b-button variant="success" class="align-self-center input-image" @click="onUploadClick">
-                    <b-icon icon="card-image"></b-icon>
-                </b-button>
-                <input type="file" ref="frmImage" class="form-image-upload" @change="onFileSelect" :accept="accept">
-                <span class="align-self-center mr-auto">{{fileName}}</span>
+                <div class="align-self-center mr-auto">
+                    <b-button variant="success" class="input-image" @click="onUploadClick">
+                        <b-icon icon="card-image"></b-icon>
+                    </b-button>
+                    <input type="file" ref="frmImage" class="form-image-upload" @change="onFileSelect" :accept="accept">
+                    <span v-if="showImageLabel">{{fileName}}
+                        <b-icon icon="x-square-fill" class="button-icon" @click="clearImageField"></b-icon>
+                    </span>
+                </div>
 
                 <span class="align-self-center">{{ charCount }}</span>
                 <b-button type="submit" variant="success" :disabled='disableButtonPost'>Post !</b-button>
@@ -55,6 +59,7 @@ export default {
             allowedFileExtension: ['.bmp', '.gif', '.jpeg', '.jpg', '.png', '.tiff'],
             accept: "",
             imageUrl: "",
+            showImageLabel: false,
         };
     },
     mounted() {
@@ -95,9 +100,13 @@ export default {
         },
         clearForm() {
             this.postText = "";
+            this.charCount = this.maxChar;
+            this.clearImageField();
+        },
+        clearImageField() {
             this.fileName = "";
             this.$refs.frmImage.value = "";
-            this.charCount = this.maxChar;
+            this.showImageLabel = false;
         },
         onUploadClick(evt) {
             evt.preventDefault();
@@ -106,6 +115,12 @@ export default {
         onFileSelect(evt) {
             const file = evt.target.files;
             if (file.length > 0) {
+                //validate file size
+                if (file[0].size > 10485760) {
+                    this.showErrorMessage(["Maximum file size is 10 MB."]);
+                    return;
+                }
+
                 //get file extension
                 let filename = file[0].name;
                 const ext = "." + filename.split(".").pop();
@@ -113,6 +128,7 @@ export default {
                 //validate allowed file extenison
                 if (this.allowedFileExtension.includes(ext)) {
                     this.fileName = file[0].name;
+                    this.showImageLabel = true;
                 } else {
                     this.showErrorMessage(['File type is not allowed.']);
                     this.$refs.frmImage.value = '';

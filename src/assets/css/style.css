@@ -95,3 +95,7 @@ body,html {
 .form-image-upload {
     display: none;
 }
+
+.button-icon{
+    cursor: pointer;
+}
