@@ -1,33 +1,51 @@
 <template>
-<div>
-    <b-container>
-        <div class="login-container">
-            <b-alert v-model="showAlert" variant="danger" dismissible>
-                <ul>
-                    <li v-for="m in this.errorMessage" :key="m">
+<b-container fluid class="login-page text-white">
+    <b-row align-v="center">
+        <b-col lg="8" class="text-center">
+            <h1 class="display-1 d-none d-lg-block">My Moment</h1>
+            <h1 class="display-3 d-block d-lg-none">My Moment</h1>
+        </b-col>
+        <b-col lg="3" class="d-flex flex-column justify-content-center form-section">
+            <div class="login-form">
+                <b-alert v-model="showAlert" variant="danger" dismissible>
+                    <p v-for="m in this.errorMessage" :key="m">
                         {{m}}
-                    </li>
-                </ul>
-            </b-alert>
-            <b-form @submit="onSubmit">
-                <b-form-group id="input-group-email">
-                    <b-form-input id="txt_email" v-model="form.email" type="email" required placeholder="Enter email"></b-form-input>
-                </b-form-group>
+                    </p>
+                </b-alert>
+                <b-form @submit="onSubmit">
+                    <b-input-group class="my-3">
+                        <b-input-group-text>
+                            <b-icon icon="person-fill"></b-icon>
+                        </b-input-group-text>
+                        <b-form-input v-model="form.email" type="email" required placeholder="Enter email"></b-form-input>
+                    </b-input-group>
 
-                <b-form-group id="input-group-password">
-                    <b-form-input type="password" id="txt_password" v-model="form.password" required placeholder="Enter password"></b-form-input>
-                </b-form-group>
+                    <b-input-group class="my-3">
+                        <b-input-group-text>
+                            <b-icon icon="lock-fill"></b-icon>
+                        </b-input-group-text>
+                        <b-form-input type="password" v-model="form.password" required placeholder="Enter password"></b-form-input>
+                    </b-input-group>
 
-                <p v-if="showPleaseWait">
-                    Please wait ...
-                </p>
+                    <p v-if="showPleaseWait">
+                        <b-icon icon="arrow-clockwise" animation="spin"></b-icon> Please wait ...
+                    </p>
 
-                <b-button type="submit" variant="primary">Login</b-button>
-                <b-link href="/reset_password" class="ml-auto">Forgot password</b-link>
-            </b-form>
-        </div>
-    </b-container>
-</div>
+                    <div class="control-wrapper d-flex my-3">
+                        <b-button type="submit" variant="primary">Login</b-button>
+                        <b-link href="/reset_password" class="align-self-center ml-auto">Forgot password</b-link>
+                    </div>
+
+                    <p class="my-3">Dont have account ? <b-link href="/register">Register</b-link>
+                    </p>
+
+                </b-form>
+            </div>
+        </b-col>
+        <b-col lg="1">
+        </b-col>
+    </b-row>
+</b-container>
 </template>
 
 <script>

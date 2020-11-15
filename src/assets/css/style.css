@@ -1,6 +1,7 @@
 body,html {
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 * {
@@ -99,3 +100,82 @@ body,html {
 .button-icon{
     cursor: pointer;
 }
+
+#app{
+    height: 100%;
+}
+
+#app .row{
+    height: 100%;
+}
+
+.login-page{
+    background-color: #2D3142;
+    height: 100%;
+}
+
+.login-page .form-section{
+    height: 100%;
+    background-color: #2D3142;
+}
+
+.login-page .login-form {
+    background-color: #2D3142;
+}
+
+.login-page .login-form input {
+    border-radius:0px;
+}
+
+.login-page .login-form button[type="submit"] {
+    border-radius:0px;
+    background-color: #EF8354;
+    border-color: #EF8354;
+}
+
+.alert {
+    padding-left: 17px;
+    padding-right: 38px;
+}
+
+.alert ul{
+    margin-bottom: 0;
+}
+
+.alert p{
+    margin-top: 3px;
+    margin-top: 3px;
+    line-height: 1;
+}
+
+
+.login-page .login-form a {
+    color: #EF8354;
+}
+
+.login-page .login-form .input-group-text {
+    border-radius:0px;
+    border-color: #4F5D75;
+    background-color: #4F5D75;
+    color: white;
+}
+
+.login-page .control-wrapper{
+    width: 100%;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {  }
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) { 
+    .login-page .form-section{
+        height: unset;
+    }
+ }
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {  }
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {  }
