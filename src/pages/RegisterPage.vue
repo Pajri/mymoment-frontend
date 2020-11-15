@@ -41,10 +41,15 @@
 <script>
 import axios from "axios";
 import {
+    ERROR_MESSAGE
+} from "@/module/const";
+
+import {
     validatePassword,
     validatePasswordConfirmation,
     validateFullName,
 } from "@/module/validation";
+
 import {
     BAlert,
     BContainer
@@ -112,7 +117,11 @@ export default {
                     }
                 })
                 .catch(function (error) {
-                    self.showRegistrationAlert(error.response.data.message);
+                    if (error.response.data.message) {
+                        self.showRegistrationAlert(error.response.data.message);
+                    } else {
+                        self.showRegistrationAlert([ERROR_MESSAGE]);
+                    }
                 });
             /*end request execution*/
         },

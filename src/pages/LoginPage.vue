@@ -23,6 +23,7 @@
                 </p>
 
                 <b-button type="submit" variant="primary">Login</b-button>
+                <b-link href="/reset_password" class="ml-auto">Forgot password</b-link>
             </b-form>
         </div>
     </b-container>
@@ -31,6 +32,10 @@
 
 <script>
 import axios from "axios";
+import {
+    ERROR_MESSAGE
+} from "@/module/const";
+
 import {
     saveAccessToken
 } from "@/module/auth_util"
@@ -100,7 +105,11 @@ export default {
                     }
                 })
                 .catch((error) => {
-                    this.showErrorAlert(error.response.data.message);
+                    if (error.response.data.message) {
+                        this.showErrorAlert(error.response.data.message);
+                    } else {
+                        this.showErrorAlert([ERROR_MESSAGE]);
+                    }
                 })
                 .finally(() => this.showPleaseWait = false);
         },

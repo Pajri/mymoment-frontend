@@ -18,6 +18,9 @@
 
 <script>
 import axios from "axios";
+import {
+    ERROR_MESSAGE
+} from "@/module/const";
 
 export default {
     name: "EmailConfirmationPage",
@@ -43,7 +46,11 @@ export default {
                 }
             })
             .catch((error) => {
-                this.errorMessage = error.response.data.message;
+                if (error.response.data.message) {
+                    this.errorMessage = error.response.data.message;
+                } else {
+                    this.errorMessage = ERROR_MESSAGE;
+                }
                 this.showConfirmed = false;
                 this.showNotConfirmed = true;
             });

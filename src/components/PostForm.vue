@@ -28,6 +28,14 @@
 <script>
 import axios from "axios";
 import {
+    ERROR_MESSAGE
+} from "@/module/const"
+
+import {
+    getAccessToken
+} from "@/module/auth_util"
+
+import {
     BIcon
 } from "bootstrap-vue";
 
@@ -123,7 +131,7 @@ export default {
             const config = {
                 withCredentials: true,
                 headers: {
-                    'Authorization': localStorage.JWT
+                    'Authorization': getAccessToken()
                 }
             };
 
@@ -137,7 +145,11 @@ export default {
                     }
                 })
                 .catch((error) => {
-                    this.showErrorMessage(error.response.data.message);
+                    if (error.response.data.message) {
+                        this.showErrorMessage(error.response.data.message);
+                    } else {
+                        this.showErrorMessage([ERROR_MESSAGE]);
+                    }
                 })
                 .finally(() => this.disableButtonPost = false)
         },
@@ -166,7 +178,11 @@ export default {
                     self.postContent();
                 })
                 .catch((error) => {
-                    self.showErrorMessage(error.response.data.message);
+                    if (error.response.data.message) {
+                        self.showErrorMessage(error.response.data.message);
+                    } else {
+                        self.showErrorMessage([ERROR_MESSAGE]);
+                    }
                     self.disableButtonPost = false;
                 })
         }

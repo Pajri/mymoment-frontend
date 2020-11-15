@@ -35,8 +35,6 @@ export default {
     props: ['postList', 'showAlert', 'errorMessage', 'showSpinner'],
     methods: {
         deleteClick(postId) {
-            console.log(postId);
-
             const deletePostUrl = process.env.VUE_APP_API_HOST + "/api/post/delete";
             const data = {
                 "post_id": postId

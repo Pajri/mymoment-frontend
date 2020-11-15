@@ -1,10 +1,10 @@
 <template>
 <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top" ref="navbar">
-    <b-navbar-brand href="#" class="nav-brand">Share Ideas</b-navbar-brand>
+    <b-navbar-brand href="/" class="nav-brand">Share Ideas</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-    <b-nav-form class="nav-searchbar-container col-md-5">
+    <b-nav-form class="nav-searchbar-container col-md-5" v-if="false">
         <b-input-group size="sm" class="col-md-12">
             <b-form-input placeholder="Search ..."></b-form-input>
 
@@ -25,8 +25,8 @@
                 <template v-slot:button-content>
                     <font-awesome-icon icon="bars" />
                 </template>
-                <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                <b-dropdown-item @click="dropdownClick($event,'profile')">Profile</b-dropdown-item>
+                <b-dropdown-item @click="dropdownClick($event,'sign_out')">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
         </b-navbar-nav>
     </b-collapse>
@@ -34,6 +34,13 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+import {
+    getAccessToken,
+    removeAccessToken
+} from "@/module/auth_util"
+
 import {
     BIcon
 } from 'bootstrap-vue'
@@ -57,5 +64,41 @@ export default {
     mounted() {
         this.$emit('navbarHeight', this.$refs.navbar.$el.clientHeight)
     },
+    methods: {
+        dropdownClick(evt, clickedDropdown) {
+            evt.preventDefault();
+
+            switch (clickedDropdown) {
+                case "sign_out":
+                    this.handleSignOut();
+                    break;
+                case "profile":
+                    this.$router.push("/profile");
+                    break;
+                default:
+                    console.log("default value reached");
+                    break;
+            }
+
+        },
+        handleSignOut() {
+            const signOutUrl = process.env.VUE_APP_API_HOST + "/api/auth/signout";
+            const config = {
+                withCredentials: true,
+                headers: {
+                    'Authorization': getAccessToken()
+                }
+            };
+
+            axios.post(signOutUrl, null, config)
+                .then((response) => {
+                    if (response.status === 200) {
+                        removeAccessToken()
+                        this.$router.push("/login")
+                    }
+                })
+                .catch((error) => console.log(error))
+        }
+    }
 }
 </script>

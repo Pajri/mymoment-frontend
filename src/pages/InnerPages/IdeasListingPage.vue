@@ -15,8 +15,13 @@
 <script>
 import axios from "axios";
 import {
+    ERROR_MESSAGE
+} from "@/module/const";
+
+import {
     getAccessToken
 } from "@/module/auth_util"
+
 import Sidebar from "../../components/Sidebar.vue";
 import IdeasListing from "../../components/IdeasListing.vue";
 import PostForm from "../../components/PostForm.vue";
@@ -79,7 +84,12 @@ export default {
                     }
                 })
                 .catch((error) => {
-                    this.showListingErrorAlert([error.response.data.message])
+                    if (error.response.data.message) {
+                        this.showListingErrorAlert([error.response.data.message])
+                    } else {
+                        this.showListingErrorAlert([ERROR_MESSAGE])
+                    }
+
                 })
                 .finally(() => this.isListingSpinnerShow = false)
         },
