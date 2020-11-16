@@ -202,6 +202,10 @@ body,html {
     min-height: 100%;
 }
 
+.change-password-page {
+    background-color: #2D3142;
+    min-height: 100%;
+}
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {  }

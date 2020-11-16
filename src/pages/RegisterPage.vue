@@ -25,7 +25,7 @@
 
             <b-input-group class="my-3">
               <b-input-group-text>
-                <b-icon icon="envelope"></b-icon>
+                <b-icon icon="envelope-fill"></b-icon>
               </b-input-group-text>
               <b-form-input
                 v-model="registrationForm.email"
