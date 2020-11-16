@@ -1,7 +1,7 @@
 <template>
 <div>
     <b-container>
-        <div class="login-container">
+        <div class="account-form-container">
             <p>Please enter your email. The reset password link will be sent to your email.</p>
             <b-form @submit="onResetPasswordSubmit">
                 <b-form-group id="input-group-email">

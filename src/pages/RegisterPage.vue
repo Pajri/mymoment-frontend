@@ -1,41 +1,55 @@
 <template>
-<div>
-    <b-container>
-        <div class="login-container" v-if="showRegister">
-            <b-alert v-model="showRegAlert" variant="danger" dismissible>
-                <ul>
-                    <li v-for="m in this.registerAlertMessage" :key="m">
-                        {{ m }}
-                    </li>
-                </ul>
-            </b-alert>
-            <b-form @submit="onRegisterSubmit">
-                <b-form-group id="input-group-full-name">
-                    <b-form-input id="txt_full_name" v-model="registrationForm.fullName" type="text" required placeholder="Enter full name"></b-form-input>
-                </b-form-group>
-                <b-form-group id="input-group-email">
-                    <b-form-input id="txt_email" v-model="registrationForm.email" type="email" required placeholder="Enter email"></b-form-input>
-                </b-form-group>
+<b-container class="registration-page py-3 d-flex align-items-center" fluid>
+    <b-row v-if="showRegister" class="flex-fill">
+        <b-col lg="4"></b-col>
+        <b-col lg="4">
+            
+            <div class="account-form-container p-3">
+                <h3>Register</h3>
+                <hr>
+                <error-message :errorMessage="this.registerAlertMessage" v-if="showRegAlert"></error-message>
+                <b-form @submit="onRegisterSubmit">
+                    <b-input-group class="my-3">
+                        <b-input-group-text>
+                            <b-icon icon="person-fill"></b-icon>
+                        </b-input-group-text>
+                        <b-form-input v-model="registrationForm.fullName" type="text" required placeholder="Enter full name"></b-form-input>
+                    </b-input-group>
 
-                <b-form-group id="input-grou~p-password">
-                    <b-form-input type="password" id="txt_password" ref="password" v-model="registrationForm.password" required placeholder="Enter password"></b-form-input>
-                </b-form-group>
+                    <b-input-group class="my-3">
+                        <b-input-group-text>
+                            <b-icon icon="envelope"></b-icon>
+                        </b-input-group-text>
+                        <b-form-input v-model="registrationForm.email" type="email" required placeholder="Enter email"></b-form-input>
+                    </b-input-group>
 
-                <b-form-group id="input-group-password-confirmation">
-                    <b-form-input type="password" id="txt_password_confirmation" v-model="registrationForm.passwordConfirmation" required placeholder="Confirm password"></b-form-input>
-                </b-form-group>
+                    <b-input-group class="my-3">
+                        <b-input-group-text>
+                            <b-icon icon="lock-fill"></b-icon>
+                        </b-input-group-text>
+                        <b-form-input type="password" ref="password" v-model="registrationForm.password" required placeholder="Enter password"></b-form-input>
+                    </b-input-group>
 
-                <b-button type="submit" variant="primary">Register</b-button>
-            </b-form>
-        </div>
+                    <b-input-group class="my-3">
+                        <b-input-group-text>
+                            <b-icon icon="check-circle-fill"></b-icon>
+                        </b-input-group-text>
+                        <b-form-input type="password" v-model="registrationForm.passwordConfirmation" required placeholder="Confirm password"></b-form-input>
+                    </b-input-group>
+                    <Loading v-if="showLoading" class="my-3 text-white"></Loading>
+                    <b-button type="submit">Register</b-button>
+                </b-form>
+            </div>
+        </b-col>
+        <b-col lg="4"></b-col>
+    </b-row>
 
-        <div class="login-container" v-if="showRegSuccesfull">
-            Registration successful ! <br />
-            Please check your email to verify your email. <br />
-            <a href="/login">Go to login page</a>
-        </div>
-    </b-container>
-</div>
+    <div class="account-form-container" v-if="showRegSuccesfull">
+        Registration successful ! <br />
+        Please check your email to verify your email. <br />
+        <a href="/login">Go to login page</a>
+    </div>
+</b-container>
 </template>
 
 <script>
@@ -51,9 +65,11 @@ import {
 } from "@/module/validation";
 
 import {
-    BAlert,
     BContainer
 } from "bootstrap-vue";
+
+import ErrorMessage from '../components/ErrorMessage.vue';
+import Loading from '../components/Loading.vue';
 
 export default {
     name: "LoginPage",
@@ -69,16 +85,19 @@ export default {
             showRegAlert: false,
             showRegister: true,
             showRegSuccesfull: false,
+            showLoading: false,
         };
     },
     components: {
-        BAlert,
         BContainer,
+        ErrorMessage,
+        Loading,
     },
     methods: {
         onRegisterSubmit(evt) {
             evt.preventDefault();
             this.cleanFormInput();
+            this.showLoading = true;
 
             let registrationValidation = this.validateRegistrationForm();
             if (!registrationValidation.isValid) {
@@ -122,12 +141,11 @@ export default {
                     } else {
                         self.showRegistrationAlert([ERROR_MESSAGE]);
                     }
+                })
+                .finally(() => {
+                    self.showLoading = false;
                 });
             /*end request execution*/
-        },
-        onOtpSubmit(evt) {
-            evt.preventDefault();
-            window.location.href = "login";
         },
         validateRegistrationForm() {
             let isValid = true;

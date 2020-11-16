@@ -1,7 +1,7 @@
 <template>
 <div>
     <b-container>
-        <div class="login-container">
+        <div class="account-form-container">
             <div v-if="showConfirmed">
                 Email is confirmed successfully. <br />
                 <a href="/login">Go to login page</a>

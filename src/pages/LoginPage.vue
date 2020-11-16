@@ -7,11 +7,7 @@
         </b-col>
         <b-col lg="3" class="d-flex flex-column justify-content-center form-section">
             <div class="login-form">
-                <b-alert v-model="showAlert" variant="danger" dismissible>
-                    <p v-for="m in this.errorMessage" :key="m">
-                        {{m}}
-                    </p>
-                </b-alert>
+                <error-message :errorMessage="this.errorMessage" v-if="showAlert"></error-message>
                 <b-form @submit="onSubmit">
                     <b-input-group class="my-3">
                         <b-input-group-text>
@@ -27,9 +23,7 @@
                         <b-form-input type="password" v-model="form.password" required placeholder="Enter password"></b-form-input>
                     </b-input-group>
 
-                    <p v-if="showPleaseWait">
-                        <b-icon icon="arrow-clockwise" animation="spin"></b-icon> Please wait ...
-                    </p>
+                    <Loading v-if="showPleaseWait"></Loading>
 
                     <div class="control-wrapper d-flex my-3">
                         <b-button type="submit" variant="primary">Login</b-button>
@@ -63,9 +57,11 @@ import {
 } from "@/module/validation";
 
 import {
-    BAlert,
     BContainer
 } from "bootstrap-vue";
+
+import ErrorMessage from '../components/ErrorMessage.vue';
+import Loading from '../components/Loading.vue';
 
 export default {
     name: "LoginPage",
@@ -81,8 +77,9 @@ export default {
         };
     },
     components: {
-        BAlert,
         BContainer,
+        ErrorMessage,
+        Loading,
     },
     methods: {
         onSubmit(evt) {

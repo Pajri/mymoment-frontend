@@ -1,5 +1,5 @@
 <template>
-<div class="login-container">
+<div class="account-form-container">
     <b-form @submit="onNewPasswordSubmit">
         <b-form-group id="input-group-new-password">
             <b-form-input type="password" v-model="form.newPassword" required placeholder="Enter new password" :disabled="passwordDisabled"></b-form-input>

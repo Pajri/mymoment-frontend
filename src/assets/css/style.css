@@ -56,18 +56,6 @@ body,html {
     padding-right: 172px;
 }
 
-.login-container{
-    width: 30%;
-    background-color: #cacaca;
-    padding: 6rem 3rem;
-    border-radius: 8px;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .post-form-alert{
     margin-top: 9px;
     margin-bottom: -5px!important;
@@ -101,6 +89,7 @@ body,html {
     cursor: pointer;
 }
 
+/*start here*/
 #app{
     height: 100%;
 }
@@ -109,13 +98,46 @@ body,html {
     height: 100%;
 }
 
+.loading {
+    margin-bottom: 0;
+}
+
+.account-form-container{
+    background-color: #bfc0c05c;
+    border-radius: 0;
+}
+
+.account-form-container button[type="submit"] {
+    border-radius:0px;
+    background-color: #EF8354;
+    border-color: #EF8354;
+}
+
+.account-form-container input {
+    border-radius: 0;
+}
+
+.account-form-container .input-group-text {
+    border-radius:0px;
+    background-color: #4F5D75;
+    color: white;
+    border-color: #4F5D75;
+}
+
+.account-form-container h3 {
+    color:white;
+}
+
+.account-form-container hr {
+    border-color: white;
+}
+
 .login-page{
     background-color: #2D3142;
     height: 100%;
 }
 
 .login-page .form-section{
-    height: 100%;
     background-color: #2D3142;
 }
 
@@ -162,6 +184,11 @@ body,html {
 
 .login-page .control-wrapper{
     width: 100%;
+}
+
+.registration-page {
+    background-color: #2D3142;
+    min-height: 100%;
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
