@@ -128,6 +128,12 @@ body,html {
     color:white;
 }
 
+.account-form-container a {
+    color:#EF8354;
+}
+
+
+
 .account-form-container hr {
     border-color: white;
 }
