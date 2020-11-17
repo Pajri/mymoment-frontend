@@ -1,6 +1,5 @@
 <template>
-<div>
-    <b-container class="ideas-listing-container">
+<b-container class="ideas-listing-container">
         <b-row>
             <b-col md="12">
                 <Sidebar :navbar-height="navbarHeight" v-if="false" />
@@ -9,7 +8,6 @@
             </b-col>
         </b-row>
     </b-container>
-</div>
 </template>
 
 <script>
@@ -78,20 +76,20 @@ export default {
             };
 
             axios.get(getListUrl + "", config)
-                .then((response) => {
-                    if (response.data.post_list != null && response.data.post_list.length > 0) {
-                        this.postList = this.postList.concat(response.data.post_list);
-                    }
-                })
-                .catch((error) => {
-                    if (error.response.data.message) {
-                        this.showListingErrorAlert([error.response.data.message])
-                    } else {
-                        this.showListingErrorAlert([ERROR_MESSAGE])
-                    }
+            .then((response) => {
+                if (response.data.post_list != null && response.data.post_list.length > 0) {
+                    this.postList = this.postList.concat(response.data.post_list);
+                }
+            })
+            .catch((error) => {
+                if (error.response.data.message) {
+                    this.showListingErrorAlert([error.response.data.message])
+                } else {
+                    this.showListingErrorAlert([ERROR_MESSAGE])
+                }
 
-                })
-                .finally(() => this.isListingSpinnerShow = false)
+            })
+            .finally(() => this.isListingSpinnerShow = false)
         },
         insertPost(post) {
             this.postList.unshift(post);

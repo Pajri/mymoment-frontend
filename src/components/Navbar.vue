@@ -1,6 +1,6 @@
 <template>
-<b-navbar toggleable="lg" type="dark" variant="dark" fixed="top" ref="navbar">
-    <b-navbar-brand href="/" class="nav-brand">Share Ideas</b-navbar-brand>
+<b-navbar toggleable="lg" type="dark" variant="dark" fixed="top" ref="navbar" class="background-dark border-0">
+    <b-navbar-brand href="/" class="nav-brand">My Moment</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -20,13 +20,13 @@
             <b-nav-text class="text-white">Hi, {{fullName}}
 
             </b-nav-text>
-            <b-nav-item-dropdown right class="rounded-0-dropdown" no-caret>
+            <b-nav-item-dropdown right class="rounded-0-dropdown custom-dropdown" no-caret>
                 <!-- Using 'button-content' slot -->
                 <template v-slot:button-content>
                     <font-awesome-icon icon="bars" />
                 </template>
                 <b-dropdown-item @click="dropdownClick($event,'profile')">Profile</b-dropdown-item>
-                <b-dropdown-item @click="dropdownClick($event,'sign_out')">Sign Out</b-dropdown-item>
+                <b-dropdown-item @click="dropdownClick($event,'sign_out')" class="sign-out">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
         </b-navbar-nav>
     </b-collapse>
