@@ -126,6 +126,7 @@ body,html {
 
 .account-form-container h3 {
     color:white;
+    width: 1vw;
 }
 
 .account-form-container a {
@@ -203,6 +204,11 @@ body,html {
 }
 
 .change-password-page {
+    background-color: #2D3142;
+    min-height: 100%;
+}
+
+.email-confirmation-page {
     background-color: #2D3142;
     min-height: 100%;
 }
