@@ -2,8 +2,6 @@
 <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top" ref="navbar" class="background-dark border-0">
     <b-navbar-brand href="/" class="nav-brand">My Moment</b-navbar-brand>
 
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
     <b-nav-form class="nav-searchbar-container col-md-5" v-if="false">
         <b-input-group size="sm" class="col-md-12">
             <b-form-input placeholder="Search ..."></b-form-input>
@@ -14,20 +12,17 @@
         </b-input-group>
     </b-nav-form>
 
+    <b-navbar-nav class="px-2">
+        <b-nav-text class="text-white">Hi, {{fullName}}</b-nav-text>
+    </b-navbar-nav>
+
+    <b-navbar-toggle target="nav-collapse" class="custom-navbar-toggle rounded-0"></b-navbar-toggle>
+
     <b-collapse id="nav-collapse" is-nav class="nav-right-menu">
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-            <b-nav-text class="text-white">Hi, {{fullName}}
-
-            </b-nav-text>
-            <b-nav-item-dropdown right class="rounded-0-dropdown custom-dropdown" no-caret>
-                <!-- Using 'button-content' slot -->
-                <template v-slot:button-content>
-                    <font-awesome-icon icon="bars" />
-                </template>
-                <b-dropdown-item @click="dropdownClick($event,'profile')">Profile</b-dropdown-item>
-                <b-dropdown-item @click="dropdownClick($event,'sign_out')" class="sign-out">Sign Out</b-dropdown-item>
-            </b-nav-item-dropdown>
+            <b-nav-item @click="dropdownClick($event,'profile')">Profile</b-nav-item>
+            <b-nav-item @click="dropdownClick($event,'sign_out')" class="sign-out">Sign Out</b-nav-item>
         </b-navbar-nav>
     </b-collapse>
 </b-navbar>

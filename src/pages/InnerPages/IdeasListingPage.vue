@@ -1,7 +1,7 @@
 <template>
 <b-container class="ideas-listing-container">
         <b-row>
-            <b-col md="12">
+            <b-col md="12" class="background-independence">
                 <Sidebar :navbar-height="navbarHeight" v-if="false" />
                 <PostForm @onPosted="insertPost" />
                 <IdeasListing :postList="postList" :errorMessage="listingErrorMessage" :showAlert="isListingAlertShow" :showSpinner="isListingSpinnerShow" @onDeleteSuccess="onDeleteSuccess" @onDeleteError="onDeleteError" />
@@ -90,6 +90,7 @@ export default {
 
             })
             .finally(() => this.isListingSpinnerShow = false)
+            
         },
         insertPost(post) {
             this.postList.unshift(post);

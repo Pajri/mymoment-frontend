@@ -1,5 +1,6 @@
 <template>
 <div :style="{'padding-top':navbarHeight+'px'}" class="inner-page-container">
+    <div class="inner-page-background"></div>
     <Navbar ref="navbarComponent" @navbarHeight="receiveNavHeight" v-if="true"></Navbar>
     <router-view />
 </div>
