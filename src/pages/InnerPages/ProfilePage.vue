@@ -1,7 +1,7 @@
 <template>
   <b-container class="profile-page background-dark py-4 text-white">
     <b-row>
-      <b-col>
+      <b-col class="background-dark pb-4">
         <error-message
           :errorMessage="this.errorMessage"
           v-if="showError"
