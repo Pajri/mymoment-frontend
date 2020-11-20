@@ -37,7 +37,7 @@
 
       <b-card no-body class="mb-3 ideas-listing-image rounded-0 border-0 background-dark text-white">
         <b-row no-gutters>
-          <b-col lg="3" v-if="post.image_url">
+          <b-col lg="3" v-if="post.image_url" @click="imageClick(post.image_url)">
             <b-card-img-lazy
               :src="post.image_url"
               alt="Card image"
@@ -62,6 +62,9 @@
     <div class="text-center text-white my-5 py-3 post-loading" v-if="showSpinner">
       <b-spinner label="Loading..." small></b-spinner>
     </div>
+    <b-modal id="modal_image" hide-footer size="xl" modal-class="post-image-modal">
+      <b-img :src="modalImage" fluid alt="Modal Image"></b-img>
+    </b-modal>
   </div>
 </template>
 
@@ -74,6 +77,11 @@ export default {
   props: ["postList", "showSpinner","showAlert","errorMessage"],
   components: {
     ErrorMessage,
+  },
+  data(){
+    return {
+      modalImage : "",
+    }
   },
   methods: {
     deleteClick(postId) {
@@ -99,6 +107,10 @@ export default {
           this.$emit("onDeleteError", error);
         });
     },
+    imageClick(imageUrl){
+      this.modalImage = imageUrl;
+      this.$bvModal.show("modal_image");
+    }
   },
 };
 </script>

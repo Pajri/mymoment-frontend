@@ -325,6 +325,10 @@ body,html {
     border-color:#4F5D75!important;
 }
 
+.post-element img {
+    cursor: pointer;
+}
+
 .custom-dropdown-nav .dropdown-toggle:hover{
     background-color: unset;
     color: #ffffff;
@@ -369,7 +373,26 @@ body,html {
     background-color: #EF8354;
 }
 
+.post-image-modal .modal-content {
+    border-radius: 0;
+}
 
+.post-image-modal .modal-header {
+    background-color: #4F5D75;
+    border-radius: 0;
+    border-bottom: 0;
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+}
+
+.post-image-modal .modal-header button{
+   color: white;
+   text-shadow: unset;
+}
+
+.post-image-modal .modal-body{
+    padding: 0;
+}
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {  }
