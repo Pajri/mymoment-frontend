@@ -12,7 +12,7 @@
         </b-input-group>
     </b-nav-form>
 
-    <b-navbar-nav class="px-2">
+    <b-navbar-nav class="px-2 d-none d-sm-block">
         <b-nav-text class="text-white">Hi, {{fullName}}</b-nav-text>
     </b-navbar-nav>
 
@@ -21,8 +21,9 @@
     <b-collapse id="nav-collapse" is-nav class="nav-right-menu">
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-            <b-nav-item @click="dropdownClick($event,'profile')">Profile</b-nav-item>
-            <b-nav-item @click="dropdownClick($event,'sign_out')" class="sign-out">Sign Out</b-nav-item>
+            <b-nav-text class="text-white d-block d-sm-none px-2">Hi, {{fullName}}</b-nav-text>
+            <b-nav-item @click="dropdownClick($event,'profile')" class="px-2">Profile</b-nav-item>
+            <b-nav-item @click="dropdownClick($event,'sign_out')" class="sign-out px-2">Sign Out</b-nav-item>
         </b-navbar-nav>
     </b-collapse>
 </b-navbar>

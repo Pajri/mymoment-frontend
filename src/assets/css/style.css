@@ -37,6 +37,19 @@ body,html {
     flex-grow: 0;
 }
 
+.nav-right-menu li.sign-out {
+    background-color: #EF8354;
+}
+
+.nav-right-menu li.sign-out a{
+    color: white!important;
+}
+
+.nav-right-menu li.sign-out:hover a{
+    color: #ffe7dd!important;
+    cursor: pointer!important;
+}
+
 .toggle-sidebar{
     position: fixed;
     left: 0;
@@ -252,10 +265,6 @@ body,html {
 .custom-dropdown a:focus {
     background-color:#2D3142;
     color: white;
-}
-
-.custom-dropdown li.sign-out {
-    background-color: #EF8354;
 }
 
 .custom-dropdown li.sign-out a:focus{
