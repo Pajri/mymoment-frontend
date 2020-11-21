@@ -4,7 +4,8 @@
       <b-col class="background-dark pb-4">
         <error-message
           :errorMessage="this.errorMessage"
-          v-if="showError"
+          :showAlert="showError"
+          @onDismissed="hideErrorMessage"
           class="post-form-alert"
           style="margin-bottom:1rem!important"
         ></error-message>
@@ -45,7 +46,7 @@
 
 <script>
 import axios from "axios";
-import { ERROR_MESSAGE } from "@/module/const";
+import { generateErrorMessageFromResponse } from "@/module/axios_util"
 
 import { getAccessToken } from "@/module/auth_util";
 
@@ -97,7 +98,8 @@ export default {
         if (error.response.data.message) {
           this.showErrorMessage([error.response.data.message]);
         } else {
-          this.showErrorMessage([ERROR_MESSAGE]);
+          const message = generateErrorMessageFromResponse(error)
+          this.showErrorMessage([message]);
         }
       });
   },
@@ -133,7 +135,8 @@ export default {
           if (error.response.data.message) {
             this.showErrorMessage(error.response.data.message);
           } else {
-            this.showErrorMessage([ERROR_MESSAGE]);
+            const message = generateErrorMessageFromResponse(error);
+            this.showErrorMessage([message]);
           }
         })
         .finally(() => {
@@ -189,7 +192,8 @@ export default {
           if (error.response.data.message) {
             this.showErrorMessage(error.response.data.message);
           } else {
-            this.showErrorMessage([ERROR_MESSAGE]);
+            const message = generateErrorMessageFromResponse(error)
+            this.showErrorMessage([message]);
           }
         })
         .finally(() => {

@@ -1,9 +1,10 @@
 <template>
   <div>
     <error-message
-      :errorMessage="this.errorMessage"
-      v-if="showAlert"
+      :errorMessage="errorMessage"
+      :showAlert="showAlert"
       class="post-form-alert"
+      @onDismissed="hideErrorMessage"
     ></error-message>
     <div class="post-editor-container background-dark p-2">
       <b-form @submit="onSubmit">
@@ -61,7 +62,7 @@
 
 <script>
 import axios from "axios";
-import { ERROR_MESSAGE } from "@/module/const";
+import { generateErrorMessageFromResponse } from "@/module/axios_util"
 
 import { getAccessToken } from "@/module/auth_util";
 
@@ -196,7 +197,8 @@ export default {
           if (error.response.data.message) {
             this.showErrorMessage(error.response.data.message);
           } else {
-            this.showErrorMessage([ERROR_MESSAGE]);
+            const message = generateErrorMessageFromResponse(error)
+            this.showErrorMessage([message]);
           }
         })
         .finally(() => {
@@ -232,7 +234,8 @@ export default {
           if (error.response.data.message) {
             self.showErrorMessage(error.response.data.message);
           } else {
-            self.showErrorMessage([ERROR_MESSAGE]);
+            const message = generateErrorMessageFromResponse(error);
+            self.showErrorMessage([message]);
           }
           self.disableButtonPost = false;
           self.showLoading = false;

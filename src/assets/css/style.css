@@ -8,8 +8,12 @@ body,html {
     box-sizing: border-box;
 }
 
-.rounded-0-dropdown ul{
-    border-radius:0px;
+#app{
+    height: 100%;
+}
+
+#app .row{
+    height: 100%;
 }
 
 .nav-brand{
@@ -109,15 +113,6 @@ body,html {
 
 .button-icon{
     cursor: pointer;
-}
-
-/*start here*/
-#app{
-    height: 100%;
-}
-
-#app .row{
-    height: 100%;
 }
 
 .loading {
@@ -382,6 +377,10 @@ body,html {
     background-color: #EF8354;
 }
 
+.post-image-modal {
+    text-align: center;
+}
+
 .post-image-modal .modal-content {
     border-radius: 0;
 }
@@ -401,6 +400,12 @@ body,html {
 
 .post-image-modal .modal-body{
     padding: 0;
+}
+
+.post-image-modal .modal-dialog{
+    max-width: 100%;
+    width: auto !important;
+    display: inline-block;
 }
 
 /* Extra small devices (portrait phones, less than 576px) */

@@ -7,7 +7,7 @@
         </b-col>
         <b-col lg="3" class="d-flex flex-column justify-content-center form-section">
             <div class="login-form">
-                <error-message :errorMessage="this.errorMessage" v-if="showAlert"></error-message>
+                <error-message :errorMessage="this.errorMessage" :showAlert="showAlert" @onDismissed="hideErrorAlert"></error-message>
                 <b-form @submit="onSubmit">
                     <b-input-group class="my-3">
                         <b-input-group-text>
@@ -44,9 +44,7 @@
 
 <script>
 import axios from "axios";
-import {
-    ERROR_MESSAGE
-} from "@/module/const";
+import { generateErrorMessageFromResponse } from "@/module/axios_util"
 
 import {
     saveAccessToken
@@ -111,8 +109,7 @@ export default {
                         let accessToken = data.access_token;
                         saveAccessToken(accessToken);
 
-                        this.showAlert = false;
-                        this.errorMessage = [];
+                        this.hideErrorAlert();
                         this.showPleaseWait = false;
 
                         this.$router.push('/');
@@ -123,7 +120,8 @@ export default {
                     if (error.response.data.message) {
                         this.showErrorAlert(error.response.data.message);
                     } else {
-                        this.showErrorAlert([ERROR_MESSAGE]);
+                        const message = generateErrorMessageFromResponse(error);
+                        this.showErrorAlert([message]);
                     }
                 })
                 .finally(() => this.showPleaseWait = false);
@@ -151,6 +149,10 @@ export default {
             this.showAlert = true;
             this.errorMessage = message;
         },
+        hideErrorAlert(){
+            this.showAlert = false;
+            this.errorMessage = [];
+        }
     },
 };
 </script>

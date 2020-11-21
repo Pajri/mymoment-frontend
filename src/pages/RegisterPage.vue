@@ -8,7 +8,8 @@
           <hr />
           <error-message
             :errorMessage="this.registerAlertMessage"
-            v-if="showRegAlert"
+            :showAlert="showRegAlert"
+            @onDismissed="hideRegistrationAlert"
           ></error-message>
           <b-form @submit="onRegisterSubmit">
             <b-input-group class="my-3">
@@ -80,7 +81,7 @@
 
 <script>
 import axios from "axios";
-import { ERROR_MESSAGE } from "@/module/const";
+import { generateErrorMessageFromResponse } from "@/module/axios_util"
 
 import {
   validatePassword,
@@ -161,7 +162,8 @@ export default {
           if (error.response.data.message) {
             self.showRegistrationAlert(error.response.data.message);
           } else {
-            self.showRegistrationAlert([ERROR_MESSAGE]);
+            const message = generateErrorMessageFromResponse(error);
+            self.showRegistrationAlert([message]);
           }
         })
         .finally(() => {
@@ -203,6 +205,10 @@ export default {
     showRegistrationAlert(val) {
       this.showRegAlert = true;
       this.registerAlertMessage = val;
+    },
+    hideRegistrationAlert() {
+      this.showRegAlert = false;
+      this.registerAlertMessage = [];
     },
     cleanFormInput() {
       this.registrationForm.fullName = this.registrationForm.fullName.trim();

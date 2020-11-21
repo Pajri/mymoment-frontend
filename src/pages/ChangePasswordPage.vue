@@ -46,7 +46,8 @@
             </b-alert>
             <error-message
               :errorMessage="this.errorMessage"
-              v-if="showError"
+              :showAlert="showError"
+              @onDismissed="hideErrorAlert"
             ></error-message>
 
             <b-button type="submit">Submit</b-button>
@@ -60,7 +61,7 @@
 
 <script>
 import axios from "axios";
-import { ERROR_MESSAGE } from "@/module/const";
+import { generateErrorMessageFromResponse } from "@/module/axios_util"
 
 import ErrorMessage from "../components/ErrorMessage.vue";
 import Loading from "../components/Loading.vue";
@@ -113,7 +114,8 @@ export default {
           if (error.response.data.message) {
             this.showErrorAlert(error.response.data.message);
           } else {
-            this.showErrorAlert([ERROR_MESSAGE]);
+            const message = generateErrorMessageFromResponse(error);
+            this.showErrorAlert([message]);
           }
         })
         .finally(() => {

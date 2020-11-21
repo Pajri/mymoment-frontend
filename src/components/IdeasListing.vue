@@ -3,8 +3,9 @@
     <div class="my-4">&nbsp;</div>
     <error-message
       :errorMessage="this.errorMessage"
-      v-if="showAlert"
+      :showAlert="showAlert"
       class="post-form-alert"
+      @onDismissed="onDismissed"
     ></error-message>
     <div
       class="my-2 background-dark post-element"
@@ -110,6 +111,9 @@ export default {
     imageClick(imageUrl){
       this.modalImage = imageUrl;
       this.$bvModal.show("modal_image");
+    },
+    onDismissed : function(){
+      this.$emit('onDismissed')
     }
   },
 };

@@ -29,6 +29,8 @@ function setupResponseInterceptor() {
       } else if (errorType == "token_invalid") {
         removeAccessToken();
         window.location.href='login';
+      }else{
+        return Promise.reject(error);
       }
     } else {
       return Promise.reject(error);
@@ -38,4 +40,11 @@ function setupResponseInterceptor() {
 
 export default function setupAxios() {
   setupResponseInterceptor();
+}
+
+export function generateErrorMessageFromResponse(error){
+  const status = error.response.status;
+  const text = error.response.statusText;
+  const message = "[Error] "+status+" : "+text;
+  return message;
 }

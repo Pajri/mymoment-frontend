@@ -29,7 +29,8 @@
             >
             <error-message
               :errorMessage="this.resetErrorMessage"
-              v-if="showResetError"
+              :showAlert="showResetError"
+              @onDismissed="hideResetErrorAlert"
             ></error-message>
 
             <Loading v-if="showLoading" class="my-3 text-white"></Loading>
@@ -45,7 +46,8 @@
 
 <script>
 import axios from "axios";
-import { ERROR_MESSAGE } from "@/module/const";
+import { generateErrorMessageFromResponse } from "@/module/axios_util"
+
 
 import { BAlert, BContainer } from "bootstrap-vue";
 
@@ -95,7 +97,8 @@ export default {
           if (error.response.data.message) {
             this.showResetErrorAlert(error.response.data.message);
           } else {
-            this.showResetErrorAlert([ERROR_MESSAGE]);
+            const message = generateErrorMessageFromResponse(error);
+            this.showResetErrorAlert([message]);
           }
         })
         .finally(()=>{

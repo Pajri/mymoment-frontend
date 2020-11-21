@@ -22,7 +22,7 @@
 
 <script>
 import axios from "axios";
-import { ERROR_MESSAGE } from "@/module/const";
+import { generateErrorMessageFromResponse } from "@/module/axios_util"
 
 import Loading from "../components/Loading.vue";
 
@@ -56,7 +56,7 @@ export default {
         if (error.response.data.message) {
           this.errorMessage = error.response.data.message;
         } else {
-          this.errorMessage = ERROR_MESSAGE;
+          this.errorMessage = generateErrorMessageFromResponse(error);
         }
         this.showConfirmed = false;
         this.showNotConfirmed = true;
