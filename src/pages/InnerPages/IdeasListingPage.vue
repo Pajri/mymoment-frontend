@@ -115,7 +115,7 @@ export default {
       const clientHeight = document.documentElement.clientHeight;
 
       const scrolledToBottom = scrollTop >= scrollHeight - clientHeight - 100;
-      if (scrolledToBottom && !this.isListingSpinnerShow) {
+      if (scrolledToBottom && !this.isListingSpinnerShow && this.postList.length > 10) {
         const lastPostDate = this.postList[this.postList.length - 1]
           .hidden_date;
         this.loadPostList(5, lastPostDate);
