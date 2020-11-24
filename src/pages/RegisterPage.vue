@@ -124,6 +124,7 @@ export default {
 
       let registrationValidation = this.validateRegistrationForm();
       if (!registrationValidation.isValid) {
+        this.showLoading = false;
         this.showRegistrationAlert(registrationValidation.message);
         return;
       }

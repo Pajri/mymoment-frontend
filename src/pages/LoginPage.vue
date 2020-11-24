@@ -84,9 +84,11 @@ export default {
             evt.preventDefault();
             this.showPleaseWait = true;
             this.cleanInput();
+            this.hideErrorAlert();
 
             let loginValidation = this.validateForm();
             if (!loginValidation.isValid) {
+                this.showPleaseWait = false;
                 this.showErrorAlert(loginValidation.message);
                 return;
             }
