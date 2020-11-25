@@ -17,10 +17,7 @@ export function validatePasswordConfirmation(password, passwordConfirmation) {
     let isValid = true;
     let message = [];
 
-    if (
-        password.password !=
-        passwordConfirmation.passwordConfirmation
-    ) {
+    if (password != passwordConfirmation) {
         isValid = false;
         message.push("Password confirmation does not match.");
     }

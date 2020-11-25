@@ -12,43 +12,23 @@
               <b-input-group-text>
                 <b-icon icon="lock-fill"></b-icon>
               </b-input-group-text>
-              <b-form-input
-                type="password"
-                v-model="form.newPassword"
-                required
-                placeholder="Enter new password"
-                :disabled="passwordDisabled"
-              ></b-form-input>
+              <b-form-input type="password" v-model="form.newPassword" required placeholder="Enter new password" :disabled="passwordDisabled"></b-form-input>
             </b-input-group>
 
             <b-input-group class="my-3">
               <b-input-group-text>
                 <b-icon icon="check-circle-fill"></b-icon>
               </b-input-group-text>
-              <b-form-input
-                type="password"
-                v-model="form.confirmPassword"
-                required
-                placeholder="Confirm new password"
-                :disabled="passwordDisabled"
-              ></b-form-input>
+              <b-form-input type="password" v-model="form.confirmPassword" required placeholder="Confirm new password" :disabled="passwordDisabled"></b-form-input>
             </b-input-group>
 
             <Loading v-if="showLoading" class="my-3 text-white"></Loading>
 
-            <b-alert
-              variant="success"
-              v-model="showSuccessAlert"
-              class="rounded-0"
-            >
+            <b-alert variant="success" v-model="showSuccessAlert" class="rounded-0">
               Password has been successfully changed. <br />
               <b-link href="/login">Go to login page</b-link>
             </b-alert>
-            <error-message
-              :errorMessage="this.errorMessage"
-              :showAlert="showError"
-              @onDismissed="hideErrorAlert"
-            ></error-message>
+            <error-message :errorMessage="this.errorMessage" :showAlert="showError" @onDismissed="hideErrorAlert"></error-message>
 
             <b-button type="submit">Submit</b-button>
           </b-form>
@@ -61,8 +41,9 @@
 
 <script>
 import axios from "axios";
-import { generateErrorMessageFromResponse } from "@/module/axios_util"
-import {removeAccessToken} from "@/module/auth_util"
+import { generateErrorMessageFromResponse } from "@/module/axios_util";
+import { removeAccessToken } from "@/module/auth_util";
+import { validatePasswordConfirmation, validatePassword } from "@/module/validation";
 
 import ErrorMessage from "../components/ErrorMessage.vue";
 import Loading from "../components/Loading.vue";
@@ -93,11 +74,15 @@ export default {
       this.hideErrorAlert();
       this.showLoading = true;
 
+      const vForm = this.validateForm();
+      if (!vForm.isValid) {
+        this.showErrorAlert(vForm.message);
+        this.showLoading = false;
+        return;
+      }
+
       const token = this.$route.query.token;
-      const changePasswordUrl =
-        process.env.VUE_APP_API_HOST +
-        "/api/auth/change_password?token=" +
-        token;
+      const changePasswordUrl = process.env.VUE_APP_API_HOST + "/api/auth/change_password?token=" + token;
       const data = {
         password: this.form.newPassword,
         password_confirmation: this.form.confirmPassword,
@@ -110,7 +95,6 @@ export default {
             this.showSuccessAlert = true;
             this.passwordDisabled = true;
             removeAccessToken();
-
           }
         })
         .catch((error) => {
@@ -132,6 +116,27 @@ export default {
     hideErrorAlert() {
       this.errorMessage = [];
       this.showError = false;
+    },
+    validateForm() {
+      let isValid = true;
+      let message = [];
+
+      const vPassword = validatePassword(this.form.newPassword);
+      if (!vPassword.isValid) {
+        isValid = false;
+        message = message.concat(vPassword.message);
+      }
+
+      const vPasswordConfirmation = validatePasswordConfirmation(this.form.newPassword, this.form.confirmPassword);
+      if (!vPasswordConfirmation.isValid) {
+        isValid = false;
+        message = message.concat(vPasswordConfirmation.message);
+      }
+
+      return {
+        isValid: isValid,
+        message: message,
+      };
     },
   },
 };
