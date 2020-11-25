@@ -62,6 +62,7 @@
 <script>
 import axios from "axios";
 import { generateErrorMessageFromResponse } from "@/module/axios_util"
+import {removeAccessToken} from "@/module/auth_util"
 
 import ErrorMessage from "../components/ErrorMessage.vue";
 import Loading from "../components/Loading.vue";
@@ -108,6 +109,8 @@ export default {
           if (response.status === 200) {
             this.showSuccessAlert = true;
             this.passwordDisabled = true;
+            removeAccessToken();
+
           }
         })
         .catch((error) => {
