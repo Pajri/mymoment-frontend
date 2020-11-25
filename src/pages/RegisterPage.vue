@@ -120,6 +120,8 @@ export default {
     onRegisterSubmit(evt) {
       evt.preventDefault();
       this.cleanFormInput();
+      this.hideRegistrationAlert();
+      
       this.showLoading = true;
 
       let registrationValidation = this.validateRegistrationForm();
