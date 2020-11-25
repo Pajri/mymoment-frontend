@@ -228,6 +228,11 @@ body,html {
     min-height: 100%;
 }
 
+.contactus-page {
+    background-color: #2D3142;
+    min-height: 100%;
+}
+
 .background-dark{
     background-color: #2D3142!important;
 }

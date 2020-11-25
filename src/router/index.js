@@ -11,6 +11,7 @@ import ProfilePage from './../pages/InnerPages/ProfilePage.vue'
 import LoginPage from '../pages/LoginPage.vue'
 import RegisterPage from '../pages/RegisterPage.vue'
 import EmailConfirmationPage from '../pages/EmailConfirmationPage.vue'
+import ContactUsPage from '../pages/ContactUsPage.vue'
 
 import ResetPasswordPage from '../pages/ResetPasswordPage.vue'
 import ChangePasswordPage from '../pages/ChangePasswordPage.vue'
@@ -45,7 +46,8 @@ const router = new Router({
     { path: '/register', component: RegisterPage },
     { path: '/email_confirmation', component: EmailConfirmationPage },
     { path: '/reset_password', component: ResetPasswordPage },
-    { path: '/change_password', component: ChangePasswordPage }
+    { path: '/change_password', component: ChangePasswordPage },
+    { path: '/contact_us', component: ContactUsPage }
   ],
 })
 

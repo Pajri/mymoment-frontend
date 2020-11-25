@@ -30,8 +30,8 @@
                         <b-link href="/reset_password" class="align-self-center ml-auto">Forgot password</b-link>
                     </div>
 
-                    <p class="my-3">Dont have account ? <b-link href="/register">Register</b-link>
-                    </p>
+                    <p class="my-3">Dont have account ? <b-link href="/register">Register</b-link></p>
+                    <p><b-link href="/contact_us">Contact Us</b-link></p>
 
                 </b-form>
             </div>
