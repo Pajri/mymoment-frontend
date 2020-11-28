@@ -52,6 +52,7 @@ npm run build
 ### Lints and fixes files
 npm run lint
 ```
+Access http://mymoment.localdev.info from the browser.
 
 #### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
