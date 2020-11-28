@@ -1,7 +1,7 @@
-# MyMoment
+# MyMoment Frontend
 
 ## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. This app uses vue js version ^2.6.12
 
 ### Prerequisites
 ##### Node JS [[link](https://nodejs.org/en/download/)]
@@ -37,6 +37,13 @@ server {
     }
 }
 ```
+
+### .env file
+Add `.env.development` file in the root project (same level with `package.json`. Add the following variable to the file
+```
+VUE_APP_API_HOST=http://mymomentapp.net
+```
+For production, add file `.env.production`
 
 ### Run the App
 ```
